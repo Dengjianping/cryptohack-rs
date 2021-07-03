@@ -1,6 +1,6 @@
 ---
 
-name: Check Set-Up & Build
+name: Build
 
 # Controls when the action will run.
 # yamllint disable-line rule:truthy
@@ -24,9 +24,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE,
       # so your job can access it
       - uses: actions/checkout@v2
-
-      - name: Run yamllint
-        uses: actionshub/yamllint@main
 
       - name: Install Rustup
         run: |

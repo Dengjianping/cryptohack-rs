@@ -1,3 +1,5 @@
+[![Build](https://github.com/Dengjianping/cryptohack-rs/actions/workflows/check.yml/badge.svg)](https://github.com/Dengjianping/cryptohack-rs/actions/workflows/check.yml)
+
 # cryptohack-rs
 Solutions for [cryptohack](https://cryptohack.org/) challenges.
 
