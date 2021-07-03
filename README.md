@@ -1,0 +1,2 @@
+# cryptohack-rs
+cryptohack
