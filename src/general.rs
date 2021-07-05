@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 /// ENCODING
 // ASCII Solution
 pub fn ascii() -> String {
@@ -30,7 +28,8 @@ pub fn hex() -> String {
 // Base64 Solution
 // wiki: https://en.wikipedia.org/wiki/Base64
 pub fn base64_encode() -> String {
-    const base64_table: [u8; 64] = *b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    const BASE64_TABLE: [u8; 64] =
+        *b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     let hexed = "72bca9b68fc16ac7beeb8f849dca1d8a783e8acf9679bf9269f7bf";
     let s = hexed
         .as_bytes()
@@ -38,16 +37,20 @@ pub fn base64_encode() -> String {
         .step_by(2)
         .enumerate()
         .map(|(i, _)| {
-            let u = u8::from_str_radix(&hexed[2 * i..(2 * i + 2)], 16)
-                .expect("overflow");
+            let u = u8::from_str_radix(&hexed[2 * i..(2 * i + 2)], 16).expect("overflow");
             format!("{:08b}", u)
         })
         .collect::<String>();
 
-    s.as_bytes().iter().step_by(6).enumerate().map(|(i, _)| {
-        let index = u8::from_str_radix(&s[6 * i..(6 * i + 6)], 2).expect("overflow") as usize;
-        base64_table[index] as char
-    }).collect::<String>()
+    s.as_bytes()
+        .iter()
+        .step_by(6)
+        .enumerate()
+        .map(|(i, _)| {
+            let index = u8::from_str_radix(&s[6 * i..(6 * i + 6)], 2).expect("overflow") as usize;
+            BASE64_TABLE[index] as char
+        })
+        .collect::<String>()
 }
 
 #[cfg(test)]
