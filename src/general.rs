@@ -1,3 +1,5 @@
+use num_bigint::BigUint;
+
 /// ENCODING
 // ASCII Solution
 pub fn ascii() -> String {
@@ -53,6 +55,45 @@ pub fn base64_encode() -> String {
         .collect::<String>()
 }
 
+// Bytes and Big Integers
+pub fn bytes_and_big_integers() -> String {
+    let big_int_str =
+        *b"11515195063862318899931685488813747395775516287289682636499965282714637259206269";
+    let big_int = BigUint::parse_bytes(&big_int_str, 10).expect("Failed to parse big int string");
+
+    let hexed_big_int_hexed = big_int.to_str_radix(16);
+    hexed_big_int_hexed
+        .as_bytes()
+        .iter()
+        .step_by(2)
+        .enumerate()
+        .map(|(i, _)| {
+            u8::from_str_radix(&hexed_big_int_hexed[2 * i..(2 * i + 2)], 16).expect("overflow")
+                as char
+        })
+        .collect()
+}
+
+// Encoding Challenge
+pub fn encoding_challenge() {
+    todo!();
+}
+
+/// XOR
+// XOR Starter
+pub fn xor_starter() -> String {
+    let target_str = b"label";
+    let oprand = 13u8;
+
+    target_str.iter().map(|c| (*c ^ oprand) as char).collect()
+}
+
+/// MATHEMATICS
+// Greatest Common Divisor
+pub fn greatest_common_divisor() -> u32 {
+    todo!();
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -73,5 +114,17 @@ mod tests {
     fn base64_encode_should_work() {
         let s = base64_encode();
         assert_eq!(s, "crypto/Base+64+Encoding+is+Web+Safe/");
+    }
+
+    #[test]
+    fn bytes_and_big_integers_should_work() {
+        let s = bytes_and_big_integers();
+        assert_eq!(s, "crypto{3nc0d1n6_4ll_7h3_w4y_d0wn}");
+    }
+
+    #[test]
+    fn xor_starter_should_work() {
+        let s = xor_starter();
+        assert_eq!(s, "aloha");
     }
 }
