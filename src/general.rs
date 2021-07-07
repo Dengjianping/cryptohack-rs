@@ -88,10 +88,37 @@ pub fn xor_starter() -> String {
 	target_str.iter().map(|c| (*c ^ oprand) as char).collect()
 }
 
+// XOR Properties
+pub fn xor_properties() -> String {
+	// KEY1 = a6c8b6733c9b22de7bc0253266a3867df55acde8635e19c73313
+	// KEY2 ^ KEY1 = 37dcb292030faa90d07eec17e3b1c6d8daf94c35d4c9191a5e1e
+	// KEY2 ^ KEY3 = c1545756687e7573db23aa1c3452a098b71a7fbf0fddddde5fc1
+	// FLAG ^ KEY1 ^ KEY3 ^ KEY2 = 04ee9855208a2cd59091d04767ae47963170d1660df7f56f5faf
+	
+	let key1 = b"a6c8b6733c9b22de7bc0253266a3867df55acde8635e19c73313";
+	let key2_key1 = b"37dcb292030faa90d07eec17e3b1c6d8daf94c35d4c9191a5e1e";
+	let key2_key3 = b"c1545756687e7573db23aa1c3452a098b71a7fbf0fddddde5fc1";
+	// flag ^ key1 ^ key3 ^ key2 = 04ee9855208a2cd59091d04767ae47963170d1660df7f56f5faf;
+	let mut flag = Vec::<u8>::with_capacity(key1.len() / 2);
+	todo!()
+}
+
 /// MATHEMATICS
 // Greatest Common Divisor
 pub fn greatest_common_divisor() -> u32 {
-	todo!();
+	let (mut a, mut b) = (66528u32, 52920u32);
+	let d;
+	loop {
+		let c = a % b;
+		if c == 0 {
+			d = b;
+			break;
+		}
+		a = b;
+		b = c;
+	}
+
+	d
 }
 
 #[cfg(test)]
@@ -126,5 +153,11 @@ mod tests {
 	fn xor_starter_should_work() {
 		let s = xor_starter();
 		assert_eq!(s, "aloha");
+	}
+
+	#[test]
+	fn greatest_common_divisor_should_work() {
+		let s = greatest_common_divisor();
+		assert_eq!(s, 1512u32);
 	}
 }
