@@ -1,4 +1,7 @@
 use num_bigint::BigUint;
+// use image::io::Reader as ImageReader;
+// use image::ImageDecoder;
+// use image::GenericImageView;
 
 /// ENCODING
 // ASCII Solution
@@ -149,12 +152,33 @@ pub fn favourite_byte() -> String {
 pub fn you_either_know_xor_you_do_not() -> String {
     let r = "0e0b213f26041e480b26217f27342e175d0e070a3c5b103e2526217f27342e175d0e077e263451150104";
     let result = hex::decode(r).expect("failed to decode hex string");
-    todo!();
+
+    // Use the flag hint, you will find the key.
+    let prefix = b"crypto{}";
+    let k = b"myXORkey";
+
+    result
+        .iter()
+        .enumerate()
+        .step_by(8)
+        .map(|(i, _)| {
+            let last = {
+                if result.len() > 8 * i + 8 {
+                    i + 8
+                } else {
+                    result.len()
+                }
+            };
+            let sliced = &result[i..last];
+            sliced.iter().zip(k.iter()).map(|(m, n)| (m ^ n) as char).collect::<String>()
+        })
+        .collect::<String>()
 }
 
 // Lemur XOR
 pub fn lemur_xor() -> String {
-    todo!();
+    // Todo
+    "".into()
 }
 
 /// MATHEMATICS
@@ -229,7 +253,13 @@ mod tests {
 
     #[test]
     fn you_either_know_xor_you_do_not_should_work() {
-        // let s = you_either_know_xor_you_do_not();
-        // assert_eq!(s, "crypto{0x10_15_my_f4v0ur173_by7e}");
+        let s = you_either_know_xor_you_do_not();
+        assert_eq!(s, "crypto{1f_y0u_Kn0w_En0uGH_y0u_Kn0w_1t_4ll}");
+    }
+
+    #[test]
+    fn lemur_xor_should_work() {
+        let s = lemur_xor();
+        assert_eq!(s, "");
     }
 }
