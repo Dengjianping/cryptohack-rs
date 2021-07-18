@@ -170,7 +170,11 @@ pub fn you_either_know_xor_you_do_not() -> String {
                 }
             };
             let sliced = &result[i..last];
-            sliced.iter().zip(k.iter()).map(|(m, n)| (m ^ n) as char).collect::<String>()
+            sliced
+                .iter()
+                .zip(k.iter())
+                .map(|(m, n)| (m ^ n) as char)
+                .collect::<String>()
         })
         .collect::<String>()
 }
@@ -197,6 +201,35 @@ pub fn greatest_common_divisor() -> u32 {
     }
 
     d
+}
+
+// Extended GCD
+// wiki: https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm
+pub fn extended_gcd() -> (i32, i32, i32) {
+    let (mut p, mut q) = (30i32, 24i32);
+
+    let mut r;
+
+    let (mut s0, mut t0) = (1i32, 0i32);
+    let (mut s1, mut t1) = (0i32, 1i32);
+
+    loop {
+        let d = p / q;
+        let (m0, n0) = (s1, t1);
+        t1 = t0 - d * t1;
+        s1 = s0 - d * s1;
+        s0 = m0;
+        t0 = n0;
+
+        r = p - d * q;
+        p = q;
+        q = r;
+        if p % q == 0 {
+            break;
+        }
+    }
+
+    (s1, t1, r)
 }
 
 #[cfg(test)]
@@ -261,5 +294,11 @@ mod tests {
     fn lemur_xor_should_work() {
         let s = lemur_xor();
         assert_eq!(s, "");
+    }
+
+    #[test]
+    fn extended_gcd_should_work() {
+        let s = extended_gcd();
+        assert_eq!(s, (1, -1, 6));
     }
 }
